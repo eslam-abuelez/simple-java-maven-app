@@ -12,6 +12,7 @@ pipeline {
         }
         stage('Test') {
             steps {
+                delay(3)
                 sh 'mvn test'
             }
             post {
