@@ -14,15 +14,15 @@ pipeline {
         stage('Clone Repo') {
             steps {
                 git 'https://github.com/eslam-abuelez/simple-java-maven-app.git'
-                bat 'dir' // List the contents of the workspace directory on Windows
+                sh 'dir' // List the contents of the workspace directory on Windows
             }
         }
         stage('Build') {
             steps {
                 script {
-                    bat 'mvn -version' // Print Maven version
+                    sh 'mvn -version' // Print Maven version
                     if (fileExists('pom.xml')) {
-                        bat 'mvn clean install'
+                        sh 'mvn clean install'
                     } else {
                         error 'pom.xml not found in the directory'
                     }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists('pom.xml')) {
-                        bat 'mvn test'
+                        sh 'mvn test'
                     } else {
                         error 'pom.xml not found in the directory'
                     }
