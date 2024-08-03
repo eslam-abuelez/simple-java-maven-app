@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven-3.9.8' // Ensure this matches the name of the Maven installation in Jenkins
+    }
+
+    stages {
+        stage('Clean Up') {
+            steps {
+                deleteDir()
+            }
+        }
+        stage('Clone Repo') {
+            steps {
+                git 'https://github.com/eslam-abuelez/simple-java-maven-app.git'
+                bat 'dir' // List the contents of the workspace directory on Windows
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    bat 'mvn -version' // Print Maven version
+                    if (fileExists('pom.xml')) {
+                        bat 'mvn clean install'
+                    } else {
+                        error 'pom.xml not found in the directory'
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    if (fileExists('pom.xml')) {
+                        bat 'mvn test'
+                    } else {
+                        error 'pom.xml not found in the directory'
+                    }
+                }
+            }
+        }
+        stage('Build Remote with Parameters'){
+            steps{
+                build 'boolPipline' , parameters:[[$class: 'BooleanParameterValue', name: 'myBoolean', value: true]]
+            }
+        }
+    }
+}
