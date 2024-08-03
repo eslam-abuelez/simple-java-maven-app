@@ -31,10 +31,10 @@ pipeline {
                 echo"Job Complete!"
             }
         }
-        stage('Build Challenge 3'){
+        stage('Build Challenge 2'){
             steps{
 
-                build 'Challenge 3'
+                build 'Challenge 2'
             }     
         }
     }
