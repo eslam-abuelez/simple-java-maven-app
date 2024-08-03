@@ -31,5 +31,11 @@ pipeline {
                 echo"Job Complete!"
             }
         }
+        stage('Build Challenge 3'){
+            steps{
+
+                build 'Challenge 3'
+            }     
+        }
     }
 }
